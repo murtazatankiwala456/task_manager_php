@@ -78,7 +78,7 @@ if(!isset($_SESSION["user_id"])){
                     <a href="add-task-form.php"><span>Add Task</span></a>
                 </button>
             </div>
-            <div class="bg-card-light dark:bg-card-dark rounded-lg shadow-md overflow-x-auto">
+            <div class="hidden md:block bg-card-light dark:bg-card-dark rounded-lg shadow-md overflow-x-auto">
                 <table class="w-full text-left">
                     <thead class="border-b border-border-light dark:border-border-dark">
                         <?php
@@ -201,7 +201,48 @@ if(!isset($_SESSION["user_id"])){
                     </tbody>
                 </table>
             </div>
-        </main>
+
+
+
+            <!-- CARD VIEW (mobile and small screens) -->
+            <div class="block md:hidden space-y-4 mt-2">
+                <?php
+        if (empty($tasks)) {
+          echo "<p class='text-center text-subtext-light dark:text-subtext-dark'>No tasks added yet!</p>";
+        } else {
+          foreach ($tasks as $task) {
+            echo '
+            <div class="bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md">
+              <p class="text-sm text-subtext-light dark:text-subtext-dark">
+                TASK ID: <span class="text-text-light dark:text-text-dark font-semibold">' . htmlspecialchars($task["task_id"]) . '</span>
+              </p>
+              <h2 class="text-lg font-semibold text-text-light dark:text-text-dark mt-2">' . htmlspecialchars($task["title"]) . '</h2>
+              <p class="text-subtext-light dark:text-subtext-dark text-sm mt-1">' . htmlspecialchars($task["description"]) . '</p>
+              <p class="text-xs text-subtext-light dark:text-subtext-dark mt-2">DATE: ' . htmlspecialchars($task["created_at"]) . '</p>
+              <div class="flex justify-end space-x-4 mt-3">
+              <button>
+                <a href="update-task-form.php?task_id=' . htmlspecialchars($task["task_id"]) . '" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400 transition-colors">
+                  <span class="material-icons text-base">edit</span>
+                </a>
+                </button>
+                 <button>
+                <a href="delete-task.php?task_id=' . htmlspecialchars($task["task_id"]) . '" class="text-red-500 hover:text-red-700 dark:hover:text-red-400 transition-colors">
+                  <span class="material-icons text-base">delete</span>
+                </a>
+                </button>
+              </div>
+            </div>';
+          }
+        }
+        ?>
+            </div>
+
+
+
+
+    </div>
+    </div>
+    </main>
     </div>
 </body>
 
